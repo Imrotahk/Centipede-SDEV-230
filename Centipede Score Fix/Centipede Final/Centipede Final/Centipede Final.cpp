@@ -5,9 +5,9 @@
 #include <raylib.h>
 #include <raymath.h>
 #include <deque>
+
 #define RAYGUI_IMPLEMENTATION
 #include "raygui.h"
-using namespace std;
 
 #define _CRT_SECURE_NO_DEPRECATE 1
 #define _CRT_SECURE_NO_WARNINGS 1
@@ -26,6 +26,7 @@ Color foodColor = { 255, 0, 0, 255 };
 int gridSize = 25;
 int gridCount = 20;
 int screen = 1;
+
 //int lives = 3;
 int score = 0;
 
@@ -197,6 +198,7 @@ public:
 		
 		Fruit.position = Fruit.GenRandomPos(Player.body);
 		isGameRunning = false;
+		score = 0;
 		//lives -= 1;
 		screen = 3;
 		//if (lives <= 0) {
@@ -209,10 +211,6 @@ public:
 
 // main game function
 int main() {
-	bool startGame = false;
-	
-	bool endGame = false;
-
 	cout << "Starting game" << endl;
 	InitWindow(gridSize * gridCount, gridSize * gridCount, "Centipede!");
 	// force 60 fps render, game speed is tied to frame speed
@@ -224,10 +222,6 @@ int main() {
 		
 		BeginDrawing();
 		
-		
-		
-		
-		
 		// Game state switch
 			//cout << screen;
 			switch (screen) {
@@ -235,6 +229,7 @@ int main() {
 				//Start screen, displays start button
 				ClearBackground(backgroundColor);
 				DrawText("Centipede!", 120, 120, 40, GREEN);
+
 				//Start Button
 				if (GuiButton(Rectangle{ 180, 400, 120, 30 }, "Start Game")) {
 					centipedeGame.isGameRunning = true;
@@ -303,7 +298,7 @@ int main() {
 				}
 				//PLay again button
 				if (GuiButton(Rectangle{ 180, 400, 120, 30 }, "Play Again")) {
-					score = 0;
+					centipedeGame.GameOver();
 					screen = 2;
 				}
 			break;
